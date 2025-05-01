@@ -47,7 +47,7 @@ import dayjs from 'dayjs';
 
 const games = ref<Game[]>([
   {
-    id: 1,
+    uuid: "uuid1",
     date: Date.now(),
     formation: '3-4-3',
     startingMembers: {
@@ -66,7 +66,7 @@ const games = ref<Game[]>([
     substitutions: [],
   },
   {
-    id: 2,
+    uuid: "uuid2",
     date: Date.now(),
     formation: '3-4-3',
     startingMembers: {

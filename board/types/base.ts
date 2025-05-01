@@ -21,7 +21,13 @@ export type MatchResult = "win" | "lose" | "draw";
 
 export type WarningType = "yellow" | "red";
 
+export type Team = {
+  uuid: string;
+  name: string
+}
+
 export type Player = {
+  uuid: string;
   name: string;
   age: number;
   gender: Gender;
@@ -59,7 +65,7 @@ export type Substitution = {
 };
 
 export type Game = {
-  id: number;
+  uuid: string;
   date: number;
   formation: Formation;
   startingMembers: MemberList;
