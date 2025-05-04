@@ -1,0 +1,17 @@
+{
+  "name": "foot-board-app",
+  "scripts": {
+    "format": "prettier --write frontend/**/*.{js,ts,jsx,tsx,json} backend/**/*.{js,ts,json}",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "e2e": "playwright test",
+    "report": "playwright show-report",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.3.0",
+    "eslint": "^9.26.0",
+    "prettier": "^3.5.3"
+  }
+}

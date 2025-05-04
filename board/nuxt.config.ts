@@ -1,14 +1,12 @@
-import { defineNuxtConfig } from 'nuxt/config'
-import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import { defineNuxtConfig } from 'nuxt/config';
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-04-13',
   app: {
     head: {
-      link: [
-        { rel: 'icon', type: 'image/png', href: '/favicon.ico' }
-      ]
-    }
+      link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }],
+    },
   },
   build: {
     transpile: ['vuetify'],
@@ -17,8 +15,8 @@ export default defineNuxtConfig({
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }))
-      })
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
     },
   ],
   vite: {
@@ -28,4 +26,10 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+  runtimeConfig: {
+    public: {
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL || '',
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_KEY || '',
+    },
+  },
+});

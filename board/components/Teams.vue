@@ -3,7 +3,7 @@
     <h2 class="">
       Teams
     </h2>
-    <v-btn prepend-icon="mdi-plus" >
+    <v-btn prepend-icon="mdi-plus">
       New Team
     </v-btn>
   </div>
@@ -22,8 +22,8 @@
       <tbody>
         <tr v-for="(team, index) in teams" :key="index">
           <td>
-            <NuxtLink :to="`games/${team.uuid}`">
-              {{team.name}}
+            <NuxtLink :to="`teams/${team.id}`">
+              {{ team.name }}
             </NuxtLink>
           </td>
           <td>{{ 3 }}</td>
@@ -38,15 +38,20 @@
 
 <script setup lang="ts">
 import type { Team } from '~/types/base';
+const teams = ref<Team[]>([])
+const { $supabase } = useNuxtApp()
 
-const teams = ref<Team[]>([
-  {
-    uuid: "uuid1",
-    name: "team 1"
-  },
-  {
-    uuid: "uuid2",
-    name: "team 1"
+const getTeams = async () => {
+  const { data, error } = await $supabase.from('teams').select()
+  if (error) {
+    console.error('Supabase error:', error)
+    return
   }
-])
+  console.log(data)
+  teams.value = data || []
+}
+
+onMounted(() => {
+  getTeams()
+})
 </script>
