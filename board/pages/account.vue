@@ -1,5 +1,5 @@
 <template>
- <Teams />
+  This is account page.
 </template>
 
 <script setup lang="ts">

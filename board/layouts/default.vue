@@ -11,14 +11,14 @@
         <v-spacer></v-spacer>
 
         <div class="d-none d-md-flex">
-          <v-btn prepend-icon="mdi-soccer" variant="text" to="/" nuxt>
-            Games
-          </v-btn>
-          <v-btn prepend-icon="mdi-account-group" variant="text" to="/team" nuxt>
-            Team
+          <v-btn prepend-icon="mdi-account-group" variant="text" to="/" nuxt>
+            Teams
           </v-btn>
           <v-btn prepend-icon="mdi-information" variant="text" to="/about" nuxt>
             About
+          </v-btn>
+          <v-btn prepend-icon="mdi-account-circle-outline" variant="text" to="/account" nuxt>
+            Account
           </v-btn>
         </div>
         <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
@@ -28,18 +28,18 @@
 
       <v-bottom-navigation class="d-flex d-md-none">
         <v-btn to="/" nuxt>
-          <v-icon>mdi-soccer</v-icon>
-          <span>Games</span>
-        </v-btn>
-
-        <v-btn to="/team" nuxt>
           <v-icon>mdi-account-group</v-icon>
-          <span>Team</span>
+          <span>Games</span>
         </v-btn>
 
         <v-btn to="/about" nuxt>
           <v-icon>mdi-information</v-icon>
           <span>About</span>
+        </v-btn>
+
+        <v-btn to="/account" nuxt>
+          <v-icon>mdi-account-circle-outline</v-icon>
+          <span>Account</span>
         </v-btn>
       </v-bottom-navigation>
 

@@ -1,33 +1,44 @@
-export type Theme = "light" | "dark";
+export type Theme = 'light' | 'dark';
 
-export type Formation =
-  | "4-4-2"
-  | "4-5-1"
-  | "4-3-3"
-  | "3-4-3"
-  | "3-5-2"
-  | "5-3-2"
-  | "5-4-1";
+export type Formation = '4-4-2' | '4-5-1' | '4-3-3' | '3-4-3' | '3-5-2' | '5-3-2' | '5-4-1' | 'not-set';
 
-export type Position = "forward" | "midfielder" | "defender" | "goalkeeper";
+export type Position = 'forward' | 'midfielder' | 'defender' | 'goalkeeper' | 'not set';
 
-export type Role = "manager" | "captain" | "vice-captain" | "player" | "none";
+export type Role = 'manager' | 'captain' | 'vice-captain' | 'player' | 'none' | 'not set';
 
-export type Gender = "male" | "female";
+export type Gender = 'male' | 'female' | 'not set';
 
-export type Dominant = "left" | "right";
+export type Dominant = 'left' | 'right' | 'not set';
 
-export type MatchResult = "win" | "lose" | "draw";
+export type MatchResult = 'win' | 'lose' | 'draw';
 
-export type WarningType = "yellow" | "red";
+export type WarningType = 'yellow' | 'red';
+
+export type Account = {
+  id: number;
+  name: string;
+  created_at: Date;
+};
+
+export type Team = {
+  id: number;
+  account_id: number;
+  name: string;
+};
 
 export type Player = {
+  id: number;
   name: string;
-  age: number;
+  birthdate: Date;
   gender: Gender;
-  Dominant: Dominant;
+  dominant: Dominant;
   position: Position;
   role: Role;
+};
+
+export type PlayerTeam = {
+  team_id: number;
+  player_id: number;
 };
 
 export type MemberList = {
@@ -61,13 +72,14 @@ export type Substitution = {
 export type Game = {
   id: number;
   date: number;
+  memo: string;
   formation: Formation;
-  startingMembers: MemberList;
+  startingMembers: MemberList; // 専用の中間テーブル必要
   opponent: string;
   matchTime: number;
   matchResult: MatchResult;
-  Scorers: ScoreEvent[];
-  Assists: ScoreEvent[];
-  warnings: Warning[];
-  substitutions: Substitution[];
+  scorers: ScoreEvent[]; // 専用の中間テーブル必要
+  assists: ScoreEvent[]; // 専用の中間テーブル必要
+  warnings: Warning[]; // 専用の中間テーブル必要
+  substitutions: Substitution[]; // 専用の中間テーブル必要
 };
