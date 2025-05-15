@@ -1,5 +1,5 @@
 <template>
-  <v-responsive class="border rounded">
+  <v-responsive>
     <v-app :theme="theme">
       <v-app-bar>
         <template v-slot:prepend>
@@ -11,10 +11,10 @@
         <v-spacer></v-spacer>
 
         <div class="d-none d-md-flex">
-          <v-btn prepend-icon="mdi-account-group" variant="text" to="/" nuxt>
+          <v-btn prepend-icon="mdi-vector-circle" variant="text" to="/" nuxt>
             Teams
           </v-btn>
-          <v-btn prepend-icon="mdi-information" variant="text" to="/about" nuxt>
+          <v-btn prepend-icon="mdi-information-outline" variant="text" to="/about" nuxt>
             About
           </v-btn>
           <v-btn prepend-icon="mdi-account-circle-outline" variant="text" to="/account" nuxt>
@@ -24,16 +24,14 @@
         <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
       </v-app-bar>
 
-
-
       <v-bottom-navigation class="d-flex d-md-none">
         <v-btn to="/" nuxt>
-          <v-icon>mdi-account-group</v-icon>
-          <span>Games</span>
+          <v-icon>mdi-vector-circle</v-icon>
+          <span>Teams</span>
         </v-btn>
 
         <v-btn to="/about" nuxt>
-          <v-icon>mdi-information</v-icon>
+          <v-icon>mdi-information-outline</v-icon>
           <span>About</span>
         </v-btn>
 
@@ -44,9 +42,7 @@
       </v-bottom-navigation>
 
       <v-main>
-        <v-container class="pa-0 h-100">
-          <slot />
-        </v-container>
+        <slot />
       </v-main>
     </v-app>
   </v-responsive>
