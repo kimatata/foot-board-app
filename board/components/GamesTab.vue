@@ -57,45 +57,6 @@
       </v-empty-state>
     </div>
   </v-container>
-  <!-- <div class="d-flex justify-space-between align-center my-6">
-    <h2 class="">
-      Games
-    </h2>
-    <v-btn prepend-icon="mdi-plus" >
-      New Game
-    </v-btn>
-  </div>
-  <div v-show="games.length > 0">
-    <v-table>
-      <thead>
-        <tr>
-          <th>
-            Date
-          </th>
-          <th>
-            Result
-          </th>
-          <th>
-            Opponent
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(game, index) in games" :key="index">
-          <td>
-            <NuxtLink :to="`games/${game.id}`">
-              {{dayjs(game.date).format('YYYY-MM-DD') }}
-            </NuxtLink>
-          </td>
-          <td>{{ game.matchResult }}</td>
-          <td>{{ game.opponent }}</td>
-        </tr>
-      </tbody>
-    </v-table>
-  </div>
-  <div v-show="games.length === 0">
-    no game record
-  </div> -->
 </template>
 
 <script setup lang="ts">
