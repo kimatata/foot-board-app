@@ -1,5 +1,5 @@
 <template>
-  This is account page.
+  <Auth :init-auth-mode="'signin'" />
 </template>
 
 <script setup lang="ts">

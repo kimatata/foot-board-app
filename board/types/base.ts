@@ -1,3 +1,5 @@
+export type AuthMode = 'signup' | 'signin';
+
 export type Theme = 'light' | 'dark';
 
 export type Formation = '4-4-2' | '4-5-1' | '4-3-3' | '3-4-3' | '3-5-2' | '5-3-2' | '5-4-1' | 'not-set';
