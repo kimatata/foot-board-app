@@ -24,6 +24,7 @@ export type Team = {
   id: number;
   account_id: number;
   name: string;
+  created_at: string;
 };
 
 export type Player = {
@@ -71,13 +72,14 @@ export type Substitution = {
 
 export type Game = {
   id: number;
+  name: string;
   date: number;
   memo: string;
   formation: Formation;
-  startingMembers: MemberList; // 専用の中間テーブル必要
+  starting_members: MemberList; // 専用の中間テーブル必要
   opponent: string;
-  matchTime: number;
-  matchResult: MatchResult;
+  match_time: number;
+  match_result: MatchResult;
   scorers: ScoreEvent[]; // 専用の中間テーブル必要
   assists: ScoreEvent[]; // 専用の中間テーブル必要
   warnings: Warning[]; // 専用の中間テーブル必要

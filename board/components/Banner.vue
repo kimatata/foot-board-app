@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <h1 class="banner-title">FootBoard</h1>
+    <h1 class="banner-title text-blue-darken-2">FootBoard</h1>
   </div>
 </template>
 
@@ -11,7 +11,6 @@
 }
 
 .banner-title {
-  color: teal;
   font-size: 1rem;
   font-weight: 700;
   font-family: "Inter";
