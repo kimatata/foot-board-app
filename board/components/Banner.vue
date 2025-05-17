@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <h1 class="banner-title text-blue-darken-2">FootBoard</h1>
+    <h1 class="banner-title text-high-emphasis">FootBoard</h1>
   </div>
 </template>
 

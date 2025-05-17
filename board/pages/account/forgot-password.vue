@@ -1,5 +1,5 @@
 <template>
-  <Auth :auth-mode="'signup'" />
+  This is forgot page.
 </template>
 
 <script setup lang="ts">

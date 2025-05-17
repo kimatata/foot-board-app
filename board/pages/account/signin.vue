@@ -1,5 +1,5 @@
 <template>
-  <Auth :init-auth-mode="'signin'" />
+  <Auth :auth-mode="'signin'" />
 </template>
 
 <script setup lang="ts">

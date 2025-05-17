@@ -1,25 +1,49 @@
 <template>
-  <v-container>
-    <v-card class="px-6 py-6 mx-auto rounded elevation-3" max-width="344">
+  <AuthCard>
+    <div class="d-flex justify-space-between">
+      <h4>{{ props.authMode === 'signup' ? 'Resister Account' : 'Sign in' }}</h4>
+      <v-btn append-icon="mdi-chevron-right" variant="text" size="small" color="teal-darken-2"
+        :to="props.authMode === 'signup' ? '/account/signin' : '/account/signup'" nuxt>
+        {{ props.authMode === 'signup' ? 'Sign in?' : 'Sign up?' }}
+      </v-btn>
+    </div>
+
+    <v-card v-show="message" class="mt-3" color="error" variant="tonal">
+      <v-card-text class="text-caption">
+        {{ message }}
+      </v-card-text>
+    </v-card>
+
+    <v-form ref="form" @submit.prevent="submit">
+      <div class="mt-3 text-subtitle-1 text-medium-emphasis">Account</div>
+      <v-text-field autocomplete="email" v-model="email" :rules="emailRules" density="compact"
+        placeholder="Email address" prepend-inner-icon="mdi-email-outline" variant="outlined" />
+
       <div class="d-flex justify-space-between align-center">
-        <h3>{{ mode === 'signup' ? 'Sign up' : 'Sign in' }}</h3>
-        <v-btn variant="plain" size="small" :to="mode === 'signup' ? '/account/signin' : '/account/signup'" nuxt>
-          {{ mode === 'signup' ? 'Sign in?' : 'Sign up?' }}
-        </v-btn>
+        <div class="text-subtitle-1 text-medium-emphasis">Password</div>
+        <NuxtLink v-if="props.authMode === 'signin'" class="text-caption text-decoration-none text-teal-darken-2"
+          :to="'/account/forgot-password'">
+          Forgot sign in password?
+        </NuxtLink>
+      </div>
+      <v-text-field :autocomplete="props.authMode === 'signup' ? 'new-password' : 'current-password'" v-model="password"
+        :rules="passwordRules" :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="showPassword ? 'text' : 'password'" density="compact" placeholder="Enter your password"
+        prepend-inner-icon="mdi-lock-outline" variant="outlined" @click:append-inner="showPassword = !showPassword" />
+
+      <div v-if="props.authMode === 'signup'">
+        <div class="text-subtitle-1 text-medium-emphasis">Password (Confirm)</div>
+        <v-text-field autocomplete="new-password" v-model="passwordConfirm" :rules="passwordRules"
+          :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'" :type="showPassword ? 'text' : 'password'"
+          density="compact" placeholder="Enter your password (confirm)" prepend-inner-icon="mdi-lock-outline"
+          variant="outlined" @click:append-inner="showPassword = !showPassword" />
       </div>
 
-      <p class="mt-2 mb-4 font-weight-light">Enter your name and email</p>
-      <v-form ref="form">
-        <v-text-field density="compact" v-model="email" variant="outlined" hide-details
-          :rules="[v => !!v || 'email is required']" label="Email" />
-        <v-btn class="mt-3" color="blue-darken-2" type="submit" block :disabled="loading" @click="validate">
-          Submit
-        </v-btn>
-      </v-form>
-    </v-card>
-  </v-container>
-
-  <v-snackbar-queue v-model="messages" color="error"></v-snackbar-queue>
+      <v-btn class="mt-8" color="teal-darken-2" size="large" block :loading="loading" type="submit">
+        {{ props.authMode === 'signup' ? 'Sign up' : 'Sign in' }}
+      </v-btn>
+    </v-form>
+  </AuthCard>
 </template>
 
 <script setup lang="ts">
@@ -28,51 +52,65 @@ import type { AuthMode } from '~/types/base';
 const { $supabase } = useNuxtApp()
 
 type Props = {
-  initAuthMode: AuthMode,
+  authMode: AuthMode,
 }
 const props = defineProps<Props>();
 
-const mode = ref<AuthMode>(props.initAuthMode)
 const form = ref()
 const loading = ref(false)
 const email = ref('')
-const messages = ref<string[]>([])
+const showPassword = ref(false)
+const password = ref("")
+const passwordConfirm = ref('')
+const message = ref<string>('')
+const emailRules = [
+  (v: string) => !!v || 'Email is required',
+]
+const passwordRules = [
+  (v: string) => (v && v.length >= 6) || 'Password must be 6 characters or more',
+]
 
-const validate = async () => {
+const submit = async () => {
   const { valid } = await form.value.validate()
   if (!valid) {
     return;
   }
 
-  if (mode.value === 'signup') {
+  if (props.authMode === 'signup' && password.value != passwordConfirm.value) {
+    message.value = 'password mismatch'
+    return;
+  }
+
+  loading.value = true
+  if (props.authMode === 'signup') {
     await signUp()
   } else {
     await signIn()
   }
+  loading.value = false
 }
 
 const signUp = async () => {
-  loading.value = true
-  const { data, error } = await $supabase.auth.signUp({
-    email: 'example@email.com',
-    password: 'example-password',
+  const { error } = await $supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
   })
   if (error) {
-    messages.value.push('Sign up failed')
+    message.value = 'Sign up failed'
+  } else {
+    navigateTo('/account/check-email')
   }
-  loading.value = false
 }
 
 const signIn = async () => {
-  loading.value = true
-  const { data, error } = await $supabase.auth.signInWithPassword({
-    email: 'example@email.com',
-    password: 'example-password',
+  const { error } = await $supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
   })
   if (error) {
-    messages.value.push('Sign in failed')
+    message.value = 'Sign in failed'
+  } else {
+    navigateTo('/account')
   }
-  loading.value = false
 }
-
 </script>

@@ -4,7 +4,7 @@
       <h2>
         Teams
       </h2>
-      <v-btn prepend-icon="mdi-plus" color="blue-darken-2">
+      <v-btn prepend-icon="mdi-plus" color="teal-darken-2">
         New Team
       </v-btn>
     </div>

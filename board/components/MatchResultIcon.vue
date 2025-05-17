@@ -2,7 +2,7 @@
   <v-chip v-show="props.result === 'win'" color="success" size="small">
     Win
   </v-chip>
-  <v-chip v-show="props.result === 'lose'" color="pink" size="small">
+  <v-chip v-show="props.result === 'lose'" color="error" size="small">
     Lose
   </v-chip>
   <v-chip v-show="props.result === 'draw'" size="small">
