@@ -26,21 +26,26 @@
           </v-tabs>
           <v-tabs-window v-model="tab" class="w-100" a>
             <v-tabs-window v-model="tab">
-              <v-tabs-window-item :transition="false" :reverse-transition="false" value="games">
-                <GamesTab :team-id="teamId" :games="games" />
-              </v-tabs-window-item>
+              <template v-if="team">
+                <v-tabs-window-item :transition="false" :reverse-transition="false" value="games">
+                  <GamesTab :team-id="team.id" :games="games" />
+                </v-tabs-window-item>
 
-              <v-tabs-window-item :transition="false" :reverse-transition="false" value="members">
-                Members
-              </v-tabs-window-item>
+                <v-tabs-window-item :transition="false" :reverse-transition="false" value="members">
+                  Members
+                </v-tabs-window-item>
 
-              <v-tabs-window-item :transition="false" :reverse-transition="false" value="data">
-                Data
-              </v-tabs-window-item>
+                <v-tabs-window-item :transition="false" :reverse-transition="false" value="data">
+                  Data
+                </v-tabs-window-item>
 
-              <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
-                Settings
-              </v-tabs-window-item>
+                <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
+                  <TeamTab :team="team" @update-team="updateTeam" />
+                </v-tabs-window-item>
+              </template>
+              <template v-else>
+                loading...
+              </template>
             </v-tabs-window>
           </v-tabs-window>
         </div>
@@ -54,27 +59,80 @@ definePageMeta({
   layout: 'default'
 })
 
-import type { Game } from '~/types/base';
-
-const tab = ref("home")
-const teamId = ref<number | null>(null)
-const games = ref<Game[]>([])
+import type { Game, Team } from '~/types/base';
 
 const route = useRoute()
+const user = useUser()
 const { $supabase } = useNuxtApp()
+const tab = ref("home")
 
-onMounted(async () => {
+onMounted(() => {
+  init()
+})
+watch(user, () => {
+  init()
+})
+
+const init = async () => {
   const paramId = route.params.teamId
   if (!paramId || Array.isArray(paramId)) {
     throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
   }
 
-  teamId.value = Number(paramId)
-  const data = await fetchGames(paramId)
-  console.log(data)
-  games.value = data;
-})
+  // featch team
+  const teamId = Number(paramId)
+  await fetchTeam(teamId)
 
+  // fetch games
+  const data = await fetchGames(paramId)
+  games.value = data;
+}
+
+/**
+ * Team
+ */
+const team = ref<Team | null>(null)
+const fetchTeam = async (teamId: number) => {
+  if (!user.value) {
+    console.error("User not logged in");
+    return;
+  }
+
+  const { data, error } = await $supabase
+    .from('teams')
+    .select()
+    .eq('id', teamId)
+    .single()
+
+  if (data) {
+    team.value = data
+  } else {
+    console.error("Team not found", error)
+  }
+}
+
+const updateTeam = async (name: string, description: string, isPublic: boolean) => {
+  if (!user.value || !team.value) {
+    return;
+  }
+
+  const { data, error } = await $supabase
+    .from('teams')
+    .update({ name: name, description: description, user_uuid: user.value.id, is_public: isPublic })
+    .eq('id', team.value.id)
+    .select()
+
+  if (data && data.length > 0) {
+    team.value = data[0]
+  } else {
+    console.error("failed to update team", error)
+  }
+}
+
+/**
+ * Games
+ */
+const games = ref<Game[]>([])
 const fetchGames = async (teamId: string) => {
   const { data, error } = await $supabase.from('games').select().eq('team_id', teamId)
   if (error) {

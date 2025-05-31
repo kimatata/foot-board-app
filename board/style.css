@@ -2,3 +2,32 @@
 .v-btn {
   text-transform: none !important;
 }
+
+/* 1024px以上の幅の場合に適応される */
+.tab-table {
+  width: 600px;
+}
+@media screen and (max-width: 1024px) {
+  /* 1024pxまでの幅の場合に適応される */
+  .tab-table {
+    width: 480px;
+  }
+}
+@media screen and (max-width: 768px) {
+  /* 768pxまでの幅の場合に適応される */
+  .tab-table {
+    min-width: 360px;
+  }
+}
+@media screen and (max-width: 480px) {
+  /* 480pxまでの幅の場合に適応される */
+  .tab-table {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 320px) {
+  /* 320pxまでの幅の場合に適応される */
+  .tab-table {
+    width: 200px;
+  }
+}

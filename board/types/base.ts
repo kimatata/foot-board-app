@@ -28,6 +28,7 @@ export type Team = {
   name: string;
   is_public: boolean;
   created_at: string;
+  description: string;
 };
 
 export type Player = {

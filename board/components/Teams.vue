@@ -4,18 +4,22 @@
       <h2>
         Teams
       </h2>
-      <v-btn prepend-icon="mdi-plus" color="teal-darken-2" class="ms-8" @click="showsTeamDialog = true"
+      <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2" class="ms-8" @click="showTeamDialog"
         :disabled="!user">
         New Team
       </v-btn>
     </div>
-    <div v-if="teams.length > 0">
+    <div v-if="sortedTeams.length > 0">
       <v-row>
-        <v-col v-for="(team, index) in teams" :key="index" cols="12" md="4">
+        <v-col v-for="(team, index) in sortedTeams" :key="index" cols="12" md="4">
           <v-card :title="team.name" class="rounded elevation-3" :to="`teams/${team.id}`" link>
             <template v-slot:text>
+              <div class="text-caption text-medium-emphasis mb-2 text-no-wrap overflow-hidden"
+                style="min-height: 30px;">
+                {{ team.description }}
+              </div>
               <div class="d-flex">
-                <v-chip size="x-small" class="me-2">
+                <v-chip size="x-small" :color="team.is_public ? 'green' : 'default'" class="me-2">
                   {{ team.is_public ? 'Public' : 'Private' }}
                 </v-chip>
                 <v-chip size="x-small" class="me-2">
@@ -36,7 +40,8 @@
     </v-empty-state>
   </v-container>
 
-  <TeamDialog :mode="'new'" :is-show="showsTeamDialog" @update-dialog="updateTeamDialog" @submit="createTeam" />
+  <TeamDialog ref="teamDialog" :mode="'new'" :is-show="showsTeamDialog" @update-dialog="updateTeamDialog"
+    @submit="createTeam" />
 </template>
 
 <script setup lang="ts">
@@ -47,8 +52,13 @@ const user = useUser()
 const { $supabase } = useNuxtApp()
 
 onMounted(async () => {
-  const data = await fetchTeams();
-  teams.value = data;
+  await fetchTeams();
+})
+
+const sortedTeams = computed(() => {
+  return teams.value.sort((a, b) => {
+    return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+  });
 })
 
 const fetchTeams = async () => {
@@ -56,18 +66,24 @@ const fetchTeams = async () => {
   if (error) {
     console.error('Supabase error:', error)
     return [];
+  } else {
+    teams.value = data || [];
   }
-  return data;
 }
 
 /**
- * Dialog
+ * Team Dialog
  */
+const teamDialog = ref()
 const showsTeamDialog = ref(false)
+const showTeamDialog = () => {
+  teamDialog.value.init(null);
+  showsTeamDialog.value = true;
+}
 const updateTeamDialog = (shows: boolean) => {
   showsTeamDialog.value = shows;
 }
-const createTeam = async (name: string, isPublic: boolean) => {
+const createTeam = async (name: string, description: string, isPublic: boolean) => {
   if (!user.value) {
     return;
   }
@@ -75,13 +91,13 @@ const createTeam = async (name: string, isPublic: boolean) => {
   showsTeamDialog.value = false;
   const { data, error } = await $supabase
     .from('teams')
-    .insert({ name: name, user_uuid: user.value.id, is_public: isPublic })
+    .insert({ name: name, description: description, user_uuid: user.value.id, is_public: isPublic })
     .select()
 
   if (data && data.length > 0) {
     teams.value.push(data[0])
   } else {
-    console.error("failed to create team")
+    console.error("failed to create team", error)
   }
 }
 </script>
