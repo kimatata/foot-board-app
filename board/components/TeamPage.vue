@@ -43,9 +43,7 @@
                   <TeamTab :team="team" @update-team="updateTeam" />
                 </v-tabs-window-item>
               </template>
-              <template v-else>
-                loading...
-              </template>
+              <template v-else> loading... </template>
             </v-tabs-window>
           </v-tabs-window>
         </div>
@@ -56,60 +54,56 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default'
-})
+  layout: 'default',
+});
 
 import type { Game, Team } from '~/types/base';
 
-const route = useRoute()
-const user = useUser()
-const { $supabase } = useNuxtApp()
-const tab = ref("home")
+const route = useRoute();
+const user = useUser();
+const { $supabase } = useNuxtApp();
+const tab = ref('home');
 
 onMounted(() => {
-  init()
-})
+  init();
+});
 watch(user, () => {
-  init()
-})
+  init();
+});
 
 const init = async () => {
-  const paramId = route.params.teamId
+  const paramId = route.params.teamId;
   if (!paramId || Array.isArray(paramId)) {
-    throw createError({ statusCode: 404, statusMessage: 'Page Not Found' })
+    throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
   }
 
   // featch team
-  const teamId = Number(paramId)
-  await fetchTeam(teamId)
+  const teamId = Number(paramId);
+  await fetchTeam(teamId);
 
   // fetch games
-  const data = await fetchGames(paramId)
+  const data = await fetchGames(paramId);
   games.value = data;
-}
+};
 
 /**
  * Team
  */
-const team = ref<Team | null>(null)
+const team = ref<Team | null>(null);
 const fetchTeam = async (teamId: number) => {
   if (!user.value) {
-    console.error("User not logged in");
+    console.error('User not logged in');
     return;
   }
 
-  const { data, error } = await $supabase
-    .from('teams')
-    .select()
-    .eq('id', teamId)
-    .single()
+  const { data, error } = await $supabase.from('teams').select().eq('id', teamId).single();
 
   if (data) {
-    team.value = data
+    team.value = data;
   } else {
-    console.error("Team not found", error)
+    console.error('Team not found', error);
   }
-}
+};
 
 const updateTeam = async (name: string, description: string, isPublic: boolean) => {
   if (!user.value || !team.value) {
@@ -120,25 +114,25 @@ const updateTeam = async (name: string, description: string, isPublic: boolean) 
     .from('teams')
     .update({ name: name, description: description, user_uuid: user.value.id, is_public: isPublic })
     .eq('id', team.value.id)
-    .select()
+    .select();
 
   if (data && data.length > 0) {
-    team.value = data[0]
+    team.value = data[0];
   } else {
-    console.error("failed to update team", error)
+    console.error('failed to update team', error);
   }
-}
+};
 
 /**
  * Games
  */
-const games = ref<Game[]>([])
+const games = ref<Game[]>([]);
 const fetchGames = async (teamId: string) => {
-  const { data, error } = await $supabase.from('games').select().eq('team_id', teamId)
+  const { data, error } = await $supabase.from('games').select().eq('team_id', teamId);
   if (error) {
-    console.error('Supabase error:', error)
+    console.error('Supabase error:', error);
     return [];
   }
   return data;
-}
+};
 </script>

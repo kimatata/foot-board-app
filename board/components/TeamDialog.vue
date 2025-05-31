@@ -32,19 +32,17 @@
 import type { Team } from '~/types/base';
 
 type Props = {
-  isShow: boolean,
-  mode: 'new' | 'edit'
-}
-const props = defineProps<Props>()
-const emit = defineEmits(['submit', 'update-dialog'])
+  isShow: boolean;
+  mode: 'new' | 'edit';
+};
+const props = defineProps<Props>();
+const emit = defineEmits(['submit', 'update-dialog']);
 
-const form = ref()
-const name = ref("")
-const description = ref("")
-const isPublic = ref(false)
-const nameRules = [
-  (v: string) => !!v || 'Name is required',
-]
+const form = ref();
+const name = ref('');
+const description = ref('');
+const isPublic = ref(false);
+const nameRules = [(v: string) => !!v || 'Name is required'];
 
 const init = (team: Team | null) => {
   if (team) {
@@ -52,23 +50,23 @@ const init = (team: Team | null) => {
     description.value = team.description;
     isPublic.value = team.is_public;
   } else {
-    name.value = "";
-    description.value = "";
+    name.value = '';
+    description.value = '';
     isPublic.value = false;
   }
-}
-defineExpose({ init })
+};
+defineExpose({ init });
 
 const submit = async () => {
-  const { valid } = await form.value.validate()
+  const { valid } = await form.value.validate();
   if (!valid) {
     return;
   }
 
-  emit('submit', name.value, description.value, isPublic.value)
-}
+  emit('submit', name.value, description.value, isPublic.value);
+};
 
 const closeDialog = () => {
-  emit('update-dialog', false)
-}
+  emit('update-dialog', false);
+};
 </script>

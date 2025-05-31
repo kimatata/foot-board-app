@@ -1,9 +1,7 @@
-<template>
-  This is forgot page.
-</template>
+<template>This is forgot page.</template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'default'
-})
+  layout: 'default',
+});
 </script>

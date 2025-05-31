@@ -13,7 +13,7 @@
 .banner-title {
   font-size: 1rem;
   font-weight: 700;
-  font-family: "Inter";
+  font-family: 'Inter';
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 </style>

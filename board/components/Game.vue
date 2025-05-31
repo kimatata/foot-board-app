@@ -1,3 +1,1 @@
-<template>
-  This is Game page
-</template>
+<template>This is Game page</template>

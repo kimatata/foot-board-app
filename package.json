@@ -1,7 +1,7 @@
 {
   "name": "foot-board-app",
   "scripts": {
-    "format": "prettier --write frontend/**/*.{js,ts,jsx,tsx,json} backend/**/*.{js,ts,json}",
+    "format": "prettier --write board/**/*.{js,ts,jsx,tsx,json,vue}",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "e2e": "playwright test",

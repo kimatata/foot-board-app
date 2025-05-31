@@ -3,8 +3,14 @@
     <v-card v-if="user" class="pa-6 mx-auto" max-width="448" rounded="lg">
       <h4>Account</h4>
       <div class="mt-3 text-caption text-medium-emphasis">Email</div>
-      <v-text-field autocomplete="email" hide-details v-model="user.email" density="compact" disabled
-        variant="outlined" />
+      <v-text-field
+        autocomplete="email"
+        hide-details
+        v-model="user.email"
+        density="compact"
+        disabled
+        variant="outlined"
+      />
 
       <div class="mt-3 text-caption text-medium-emphasis">User Name</div>
       <v-text-field autocomplete="name" v-model="username" density="compact" variant="outlined" />
@@ -24,49 +30,44 @@
 </template>
 
 <script setup lang="ts">
-import type { User } from '@supabase/supabase-js'
-const { $supabase } = useNuxtApp()
+import type { User } from '@supabase/supabase-js';
+const { $supabase } = useNuxtApp();
 
-const user = ref<User | null>(null)
-const loading = ref(false)
-const username = ref('')
-const avatar_path = ref('')
+const user = ref<User | null>(null);
+const loading = ref(false);
+const username = ref('');
+const avatar_path = ref('');
 
 onMounted(async () => {
-  getUser()
+  getUser();
   if (user.value) {
-    fetchUser(user.value.id)
+    fetchUser(user.value.id);
   }
-})
+});
 
 const getUser = async () => {
-  const { data, error } = await $supabase.auth.getSession()
+  const { data, error } = await $supabase.auth.getSession();
   if (error || !data.session) {
-    await navigateTo('account/signin')
+    await navigateTo('account/signin');
     return;
   }
 
-  user.value = data.session.user
-}
+  user.value = data.session.user;
+};
 
 const fetchUser = async (userId: string) => {
-  const { data } = await $supabase
-    .from('profiles')
-    .select(`username, avatar_url`)
-    .eq('id', userId)
-    .single()
+  const { data } = await $supabase.from('profiles').select(`username, avatar_url`).eq('id', userId).single();
 
   if (data) {
-    username.value = data.username
-    avatar_path.value = data.avatar_url
+    username.value = data.username;
+    avatar_path.value = data.avatar_url;
   }
-}
+};
 
 const updateProfile = async () => {
   // try {
   //   loading.value = true
   //   const user = useSupabaseUser()
-
   //   const updates = {
   //     id: user.value.id,
   //     username: username.value,
@@ -74,7 +75,6 @@ const updateProfile = async () => {
   //     avatar_url: avatar_path.value,
   //     updated_at: new Date(),
   //   }
-
   //   const { error } = await $supabase.from('profiles').upsert(updates, {
   //     returning: 'minimal', // Don't return the value after inserting
   //   })
@@ -84,22 +84,22 @@ const updateProfile = async () => {
   // } finally {
   //   loading.value = false
   // }
-}
+};
 
 const signOut = async () => {
   try {
-    loading.value = true
-    const { error } = await $supabase.auth.signOut()
+    loading.value = true;
+    const { error } = await $supabase.auth.signOut();
     if (error) {
-      throw error
+      throw error;
     } else {
-      user.value = null
-      navigateTo('/account/signin')
+      user.value = null;
+      navigateTo('/account/signin');
     }
   } catch (error: any) {
-    alert(error.message)
+    alert(error.message);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>

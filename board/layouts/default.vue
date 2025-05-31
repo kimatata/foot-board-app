@@ -11,15 +11,9 @@
         <v-spacer></v-spacer>
 
         <div class="d-none d-md-flex">
-          <v-btn prepend-icon="mdi-vector-circle" variant="text" to="/" nuxt>
-            Teams
-          </v-btn>
-          <v-btn prepend-icon="mdi-information-outline" variant="text" to="/about" nuxt>
-            About
-          </v-btn>
-          <v-btn prepend-icon="mdi-account-circle-outline" variant="text" to="/account" nuxt>
-            Account
-          </v-btn>
+          <v-btn prepend-icon="mdi-vector-circle" variant="text" to="/" nuxt> Teams </v-btn>
+          <v-btn prepend-icon="mdi-information-outline" variant="text" to="/about" nuxt> About </v-btn>
+          <v-btn prepend-icon="mdi-account-circle-outline" variant="text" to="/account" nuxt> Account </v-btn>
         </div>
         <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
       </v-app-bar>
@@ -50,23 +44,23 @@
 
 <script setup lang="ts">
 const user = useUser();
-const theme = useTheme()
-const { $supabase } = useNuxtApp()
+const theme = useTheme();
+const { $supabase } = useNuxtApp();
 
 const onClick = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
+};
 
 onBeforeMount(async () => {
-  getUser()
-})
+  getUser();
+});
 
 const getUser = async () => {
-  const { data, error } = await $supabase.auth.getSession()
+  const { data, error } = await $supabase.auth.getSession();
   if (error || !data.session) {
     return;
   }
 
-  user.value = data.session.user
-}
+  user.value = data.session.user;
+};
 </script>

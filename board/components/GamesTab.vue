@@ -2,35 +2,19 @@
   <v-container class="d-flex justify-center">
     <div>
       <div class="d-flex justify-space-between align-center my-6">
-        <h2>
-          Games
-        </h2>
-        <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2">
-          New Game
-        </v-btn>
+        <h2>Games</h2>
+        <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2"> New Game </v-btn>
       </div>
       <div v-show="props.games.length > 0">
         <v-table class="rounded elevation-3">
           <thead>
             <tr>
-              <th>
-                Result
-              </th>
-              <th>
-                Name
-              </th>
-              <th>
-                Opponent
-              </th>
-              <th>
-                Formation
-              </th>
-              <th>
-                Match time
-              </th>
-              <th>
-                Created at
-              </th>
+              <th>Result</th>
+              <th>Name</th>
+              <th>Opponent</th>
+              <th>Formation</th>
+              <th>Match time</th>
+              <th>Created at</th>
             </tr>
           </thead>
           <tbody>
@@ -51,9 +35,12 @@
           </tbody>
         </v-table>
       </div>
-      <v-empty-state v-show="games.length === 0" icon="mdi-magnify"
+      <v-empty-state
+        v-show="games.length === 0"
+        icon="mdi-magnify"
         text="Try adjusting your search terms or filters. Sometimes less specific terms or broader queries can help you find what you're looking for."
-        title="We couldn't find a match.">
+        title="We couldn't find a match."
+      >
       </v-empty-state>
     </div>
   </v-container>
@@ -65,9 +52,9 @@ import dayjs from 'dayjs';
 
 type Props = {
   teamId: number | null;
-  games: Game[]
-}
-const props = defineProps<Props>()
+  games: Game[];
+};
+const props = defineProps<Props>();
 
 // import { sampleTeam, sampleOpponentTeam } from '~/assets/gemes';
 // const games = ref<Game[]>([
