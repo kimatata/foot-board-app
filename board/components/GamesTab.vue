@@ -39,7 +39,7 @@
                 <MatchResultIcon :result="game.match_result" />
               </td>
               <td>
-                <NuxtLink :to="`teams/${props.teamId}/games/${game.id}`">
+                <NuxtLink :to="`teams/${props.teamId}/games/${game.id}`" class="text-teal-darken-2">
                   {{ game.name }}
                 </NuxtLink>
               </td>

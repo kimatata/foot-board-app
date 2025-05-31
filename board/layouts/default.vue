@@ -49,8 +49,24 @@
 </template>
 
 <script setup lang="ts">
+const user = useUser();
 const theme = useTheme()
-function onClick() {
+const { $supabase } = useNuxtApp()
+
+const onClick = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
+}
+
+onBeforeMount(async () => {
+  getUser()
+})
+
+const getUser = async () => {
+  const { data, error } = await $supabase.auth.getSession()
+  if (error || !data.session) {
+    return;
+  }
+
+  user.value = data.session.user
 }
 </script>

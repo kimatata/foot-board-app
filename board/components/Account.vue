@@ -63,27 +63,27 @@ const fetchUser = async (userId: string) => {
 }
 
 const updateProfile = async () => {
-  try {
-    loading.value = true
-    const user = useSupabaseUser()
+  // try {
+  //   loading.value = true
+  //   const user = useSupabaseUser()
 
-    const updates = {
-      id: user.value.id,
-      username: username.value,
-      website: website.value,
-      avatar_url: avatar_path.value,
-      updated_at: new Date(),
-    }
+  //   const updates = {
+  //     id: user.value.id,
+  //     username: username.value,
+  //     website: website.value,
+  //     avatar_url: avatar_path.value,
+  //     updated_at: new Date(),
+  //   }
 
-    const { error } = await $supabase.from('profiles').upsert(updates, {
-      returning: 'minimal', // Don't return the value after inserting
-    })
-    if (error) throw error
-  } catch (error) {
-    alert(error.message)
-  } finally {
-    loading.value = false
-  }
+  //   const { error } = await $supabase.from('profiles').upsert(updates, {
+  //     returning: 'minimal', // Don't return the value after inserting
+  //   })
+  //   if (error) throw error
+  // } catch (error) {
+  //   alert(error.message)
+  // } finally {
+  //   loading.value = false
+  // }
 }
 
 const signOut = async () => {

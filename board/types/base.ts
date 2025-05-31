@@ -24,8 +24,9 @@ export type Account = {
 
 export type Team = {
   id: number;
-  account_id: number;
+  user_uuid: number;
   name: string;
+  is_public: boolean;
   created_at: string;
 };
 
