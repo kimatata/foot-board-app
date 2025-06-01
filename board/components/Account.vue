@@ -17,11 +17,11 @@
           <v-tabs-window v-model="tab" class="w-100">
             <v-tabs-window v-model="tab">
               <v-tabs-window-item :transition="false" :reverse-transition="false" value="account">
-                <TabWindowItemAccount :user="user" @update-profile="updateProfile" />
+                <TabWindowItemAccount :user="user" @on-update-user="onUpdateUser" />
               </v-tabs-window-item>
 
               <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
-                <TabWindowItemAccountActions @sign-out="signOut" @delete-account="deleteAccount" />
+                <TabWindowItemAccountSettings @sign-out="signOut" @delete-account="deleteAccount" />
               </v-tabs-window-item>
             </v-tabs-window>
           </v-tabs-window>
@@ -34,6 +34,7 @@
 <script setup lang="ts">
 import type { User } from '@supabase/supabase-js';
 const { $supabase } = useNuxtApp();
+const messages = useMessages();
 
 const tab = ref('account');
 const user = ref<User | null>(null);
@@ -67,26 +68,8 @@ const fetchUser = async (userId: string) => {
   }
 };
 
-const updateProfile = async () => {
-  // try {
-  //   loading.value = true
-  //   const user = useSupabaseUser()
-  //   const updates = {
-  //     id: user.value.id,
-  //     username: username.value,
-  //     website: website.value,
-  //     avatar_url: avatar_path.value,
-  //     updated_at: new Date(),
-  //   }
-  //   const { error } = await $supabase.from('profiles').upsert(updates, {
-  //     returning: 'minimal', // Don't return the value after inserting
-  //   })
-  //   if (error) throw error
-  // } catch (error) {
-  //   alert(error.message)
-  // } finally {
-  //   loading.value = false
-  // }
+const onUpdateUser = (newUser: User) => {
+  user.value = newUser;
 };
 
 const signOut = async () => {
@@ -97,6 +80,10 @@ const signOut = async () => {
       throw error;
     } else {
       user.value = null;
+      messages.value.push({
+        text: 'You have signed out successfully',
+        color: 'teal-darken-2',
+      });
       navigateTo('/account/signin');
     }
   } catch (error: any) {

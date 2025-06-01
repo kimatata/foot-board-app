@@ -16,6 +16,11 @@ export type MatchResult = 'win' | 'lose' | 'draw';
 
 export type WarningType = 'yellow' | 'red';
 
+export type Message = {
+  text: string;
+  color: string;
+};
+
 export type Account = {
   id: number;
   name: string;

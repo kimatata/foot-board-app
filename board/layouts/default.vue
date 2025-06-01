@@ -29,6 +29,8 @@
         </v-btn>
       </v-bottom-navigation>
 
+      <v-snackbar-queue v-model="messages" />
+
       <v-main>
         <slot />
       </v-main>
@@ -39,6 +41,7 @@
 <script setup lang="ts">
 const user = useUser();
 const theme = useTheme();
+const messages = useMessages();
 const { $supabase } = useNuxtApp();
 
 const onClick = () => {
