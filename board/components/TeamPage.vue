@@ -24,11 +24,11 @@
               Settings
             </v-tab>
           </v-tabs>
-          <v-tabs-window v-model="tab" class="w-100" a>
+          <v-tabs-window v-model="tab" class="w-100">
             <v-tabs-window v-model="tab">
               <template v-if="team">
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="games">
-                  <GamesTab :team-id="team.id" :games="games" />
+                  <TabWindowItemGames :team-id="team.id" :games="games" />
                 </v-tabs-window-item>
 
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="members">
@@ -40,7 +40,7 @@
                 </v-tabs-window-item>
 
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
-                  <TeamTab :team="team" @update-team="updateTeam" />
+                  <TabWindowItemTeam :team="team" @update-team="updateTeam" />
                 </v-tabs-window-item>
               </template>
               <template v-else> loading... </template>
@@ -92,7 +92,6 @@ const init = async () => {
 const team = ref<Team | null>(null);
 const fetchTeam = async (teamId: number) => {
   if (!user.value) {
-    console.error('User not logged in');
     return;
   }
 

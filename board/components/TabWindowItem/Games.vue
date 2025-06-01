@@ -1,10 +1,9 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <div>
-      <div class="d-flex justify-space-between align-center my-6">
-        <h2>Games</h2>
-        <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2"> New Game </v-btn>
-      </div>
+  <TabWindowItem :title="'Games'">
+    <template #actions>
+      <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2"> New Game </v-btn>
+    </template>
+    <template #content>
       <div v-show="props.games.length > 0">
         <v-table class="rounded elevation-3">
           <thead>
@@ -42,8 +41,8 @@
         title="We couldn't find a match."
       >
       </v-empty-state>
-    </div>
-  </v-container>
+    </template>
+  </TabWindowItem>
 </template>
 
 <script setup lang="ts">

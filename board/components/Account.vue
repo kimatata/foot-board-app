@@ -1,31 +1,33 @@
 <template>
-  <v-container>
-    <v-card v-if="user" class="pa-6 mx-auto" max-width="448" rounded="lg">
-      <h4>Account</h4>
-      <div class="mt-3 text-caption text-medium-emphasis">Email</div>
-      <v-text-field
-        autocomplete="email"
-        hide-details
-        v-model="user.email"
-        density="compact"
-        disabled
-        variant="outlined"
-      />
+  <v-container fluid class="pa-0">
+    <v-row>
+      <v-col>
+        <div class="d-flex flex-row">
+          <v-tabs v-model="tab" direction="vertical" class="elevation-3 h-screen">
+            <v-tab value="account">
+              <v-icon icon="mdi-account-circle-outline" class="me-1" />
+              Account
+            </v-tab>
 
-      <div class="mt-3 text-caption text-medium-emphasis">User Name</div>
-      <v-text-field autocomplete="name" v-model="username" density="compact" variant="outlined" />
-      <v-btn color="teal-darken-2" :loading="loading" @click="updateProfile">Update Profile</v-btn>
-    </v-card>
+            <v-tab value="settings">
+              <v-icon icon="mdi-cog" class="me-1" />
+              Settings
+            </v-tab>
+          </v-tabs>
+          <v-tabs-window v-model="tab" class="w-100">
+            <v-tabs-window v-model="tab">
+              <v-tabs-window-item :transition="false" :reverse-transition="false" value="account">
+                <TabWindowItemAccount :user="user" @update-profile="updateProfile" />
+              </v-tabs-window-item>
 
-    <!-- <v-card class="mx-auto mt-8 pa-6" max-width="448" rounded="lg">
-      <h4 class="mt-3">Your teams</h4>
-    </v-card> -->
-
-    <v-card class="mx-auto mt-8 pa-6" max-width="448" rounded="lg">
-      <h4 class="my-3">Other Actions</h4>
-      <v-btn color="teal-darken-2" variant="outlined" @click="signOut">Sign Out</v-btn>
-      <v-btn color="error" variant="outlined" class="ms-3">Delete Account</v-btn>
-    </v-card>
+              <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
+                <TabWindowItemAccountActions @sign-out="signOut" @delete-account="deleteAccount" />
+              </v-tabs-window-item>
+            </v-tabs-window>
+          </v-tabs-window>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -33,6 +35,7 @@
 import type { User } from '@supabase/supabase-js';
 const { $supabase } = useNuxtApp();
 
+const tab = ref('account');
 const user = ref<User | null>(null);
 const loading = ref(false);
 const username = ref('');
@@ -101,5 +104,9 @@ const signOut = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const deleteAccount = async () => {
+  console.log('Delete account');
 };
 </script>

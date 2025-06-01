@@ -1,15 +1,12 @@
 <template>
-  <v-container class="d-flex justify-center">
-    <div>
-      <div class="d-flex justify-space-between align-center my-6">
-        <h2>Team</h2>
-        <div>
-          <v-btn size="small" prepend-icon="mdi-pencil" color="teal-darken-2" class="me-2" @click="showTeamDialog">
-            Update Team
-          </v-btn>
-          <v-btn size="small" prepend-icon="mdi-delete" color="error" variant="outlined"> Delete Team </v-btn>
-        </div>
-      </div>
+  <TabWindowItem :title="'Team'">
+    <template #actions>
+      <v-btn size="small" prepend-icon="mdi-pencil" color="teal-darken-2" class="me-2" @click="showTeamDialog">
+        Update Team
+      </v-btn>
+      <v-btn size="small" prepend-icon="mdi-delete" color="error" variant="outlined"> Delete Team </v-btn>
+    </template>
+    <template #content>
       <div v-if="props.team">
         <v-table class="rounded elevation-3 tab-table">
           <tbody>
@@ -36,8 +33,9 @@
           </tbody>
         </v-table>
       </div>
-    </div>
-  </v-container>
+    </template>
+  </TabWindowItem>
+
   <TeamDialog
     ref="teamDialog"
     :mode="'edit'"
