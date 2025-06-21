@@ -14,7 +14,8 @@
           <v-btn prepend-icon="mdi-vector-circle" variant="text" to="/" nuxt> Teams </v-btn>
           <v-btn prepend-icon="mdi-account-circle-outline" variant="text" to="/account" nuxt> Account </v-btn>
         </div>
-        <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
+        <!-- TODO : Add theme toggle button -->
+        <!-- <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" /> -->
       </v-app-bar>
 
       <v-bottom-navigation class="d-flex d-md-none">
@@ -44,9 +45,9 @@ const theme = useTheme();
 const messages = useMessages();
 const { $supabase } = useNuxtApp();
 
-const onClick = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light';
-};
+// const onClick = () => {
+//   theme.value = theme.value === 'light' ? 'dark' : 'light';
+// };
 
 onBeforeMount(async () => {
   getUser();

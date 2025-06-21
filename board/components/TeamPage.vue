@@ -53,10 +53,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'default',
-});
-
 import type { Game, Team } from '~/types/base';
 
 const route = useRoute();
