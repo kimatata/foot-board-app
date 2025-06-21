@@ -5,7 +5,7 @@
       <v-btn
         size="small"
         prepend-icon="mdi-plus"
-        color="teal-darken-2"
+        color="green-accent-3"
         class="ms-8"
         @click="showTeamDialog"
         :disabled="!user"

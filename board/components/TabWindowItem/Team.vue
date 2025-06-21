@@ -1,10 +1,18 @@
 <template>
   <TabWindowItem :title="'Team'">
     <template #actions>
-      <v-btn size="small" prepend-icon="mdi-pencil" color="teal-darken-2" class="me-2" @click="showTeamDialog">
+      <v-btn size="small" prepend-icon="mdi-pencil" color="green-accent-3" class="me-2" @click="showTeamDialog">
         Update Team
       </v-btn>
-      <v-btn size="small" prepend-icon="mdi-delete" color="error" variant="outlined"> Delete Team </v-btn>
+      <v-btn
+        size="small"
+        prepend-icon="mdi-delete"
+        color="pink-accent-3"
+        variant="outlined"
+        @click="showTeamDeleteDialog"
+      >
+        Delete Team
+      </v-btn>
     </template>
     <template #content>
       <div v-if="props.team">
@@ -43,6 +51,12 @@
     @update-dialog="updateTeamDialog"
     @submit="updateTeam"
   />
+
+  <TeamDeleteDialog
+    :is-show="showsTeamDeleteDialog"
+    @delete="deleteTeam"
+    @update-dialog="showsTeamDeleteDialog = false"
+  />
 </template>
 
 <script setup lang="ts">
@@ -53,7 +67,7 @@ type Props = {
   team: Team | null;
 };
 const props = defineProps<Props>();
-const emit = defineEmits(['update-team']);
+const emit = defineEmits(['update-team', 'delete-team']);
 
 /**
  * Team Dialog
@@ -70,5 +84,17 @@ const updateTeamDialog = (shows: boolean) => {
 const updateTeam = (name: string, description: string, isPublic: boolean) => {
   emit('update-team', name, description, isPublic);
   showsTeamDialog.value = false;
+};
+
+/**
+ * Team Delete Dialog
+ */
+const showsTeamDeleteDialog = ref(false);
+const showTeamDeleteDialog = () => {
+  showsTeamDeleteDialog.value = true;
+};
+const deleteTeam = () => {
+  emit('delete-team');
+  showsTeamDeleteDialog.value = false;
 };
 </script>

@@ -40,7 +40,7 @@
                 </v-tabs-window-item>
 
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="settings">
-                  <TabWindowItemTeam :team="team" @update-team="updateTeam" />
+                  <TabWindowItemTeam :team="team" @update-team="updateTeam" @delete-team="deleteTeam" />
                 </v-tabs-window-item>
               </template>
               <template v-else> loading... </template>
@@ -119,6 +119,19 @@ const updateTeam = async (name: string, description: string, isPublic: boolean) 
     team.value = data[0];
   } else {
     console.error('failed to update team', error);
+  }
+};
+
+const deleteTeam = async () => {
+  if (!user.value || !team.value) {
+    return;
+  }
+
+  const { error } = await $supabase.from('teams').delete().eq('id', team.value.id);
+  if (error) {
+    console.error('failed to delete team', error);
+  } else {
+    navigateTo('/');
   }
 };
 

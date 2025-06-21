@@ -13,7 +13,7 @@
           <v-spacer></v-spacer>
 
           <v-btn text="Cancel" @click="closeDialog" />
-          <v-btn text="Update" color="teal-darken-2" type="submit" />
+          <v-btn text="Update" color="green-accent-3" type="submit" />
         </v-card-actions>
       </v-form>
     </v-card>

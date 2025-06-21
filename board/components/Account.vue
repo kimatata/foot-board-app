@@ -82,7 +82,7 @@ const signOut = async () => {
       user.value = null;
       messages.value.push({
         text: 'You have signed out successfully',
-        color: 'teal-darken-2',
+        color: 'green-accent-3',
       });
       navigateTo('/account/signin');
     }

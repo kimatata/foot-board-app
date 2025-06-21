@@ -1,7 +1,7 @@
 <template>
   <TabWindowItem :title="'Games'">
     <template #actions>
-      <v-btn size="small" prepend-icon="mdi-plus" color="teal-darken-2"> New Game </v-btn>
+      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3"> New Game </v-btn>
     </template>
     <template #content>
       <div v-show="props.games.length > 0">
@@ -22,7 +22,7 @@
                 <MatchResultIcon :result="game.match_result" />
               </td>
               <td>
-                <NuxtLink :to="`teams/${props.teamId}/games/${game.id}`" class="text-teal-darken-2">
+                <NuxtLink :to="`teams/${props.teamId}/games/${game.id}`" class="text-green-accent-3">
                   {{ game.name }}
                 </NuxtLink>
               </td>

@@ -20,8 +20,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text="Cancel" @click="closeDialog" />
-          <v-btn :text="props.mode === 'new' ? 'Create' : 'Update'" color="teal-darken-2" type="submit" />
+          <v-btn text="Cancel" @click="closeDialog" class="w-25" />
+          <v-btn
+            variant="elevated"
+            :text="props.mode === 'new' ? 'Create' : 'Update'"
+            color="green-accent-3"
+            type="submit"
+            class="w-25"
+          />
         </v-card-actions>
       </v-form>
     </v-card>
