@@ -28,7 +28,7 @@
             <v-tabs-window v-model="tab">
               <template v-if="team">
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="games">
-                  <TabWindowItemGames :team-id="team.id" :games="games" />
+                  <TabWindowItemGames :team-id="team.id" :games="games" @create-new-game="createNewGame" />
                 </v-tabs-window-item>
 
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="members">
@@ -142,5 +142,31 @@ const fetchGames = async (teamId: string) => {
     return [];
   }
   return data;
+};
+
+const createNewGame = async () => {
+  if (!team.value) {
+    console.error('Team is not set');
+    return;
+  }
+
+  const { data, error } = await $supabase
+    .from('games')
+    .insert({
+      name: 'untitled-game',
+      team_id: team.value.id,
+      memo: '',
+      date: new Date().toISOString(),
+      formation: 'not-set',
+      opponent: '',
+      match_time: 0,
+      match_result: 'draw',
+    })
+    .select();
+  if (data && data.length > 0) {
+    games.value.push(data[0]);
+  } else {
+    console.error('failed to create game', error);
+  }
 };
 </script>

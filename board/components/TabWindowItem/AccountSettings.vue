@@ -8,10 +8,10 @@
           Sign Out
         </v-btn>
       </div>
-      <div class="d-flex justify-space-between align-center mt-3">
+      <!-- <div class="d-flex justify-space-between align-center mt-3">
         <h4 class="text-subtitle-1 text-pink-accent-3">Delete all data from your account</h4>
         <v-btn color="pink-accent-3" variant="outlined" style="width: 96px">Delete</v-btn>
-      </div>
+      </div> -->
     </template>
   </TabWindowItem>
 </template>

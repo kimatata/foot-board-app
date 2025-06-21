@@ -11,7 +11,6 @@ html,
 body,
 #__nuxt {
   margin: 0;
-  height: 100%;
 }
 
 #__nuxt {
