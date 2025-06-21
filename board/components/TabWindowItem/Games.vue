@@ -1,7 +1,9 @@
 <template>
   <TabWindowItem :title="'Games'">
     <template #actions>
-      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3"> New Game </v-btn>
+      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3" @click="emit('create-new-game')">
+        New Game
+      </v-btn>
     </template>
     <template #content>
       <div v-show="props.games.length > 0">
@@ -22,7 +24,7 @@
                 <MatchResultIcon :result="game.match_result" />
               </td>
               <td>
-                <NuxtLink :to="`teams/${props.teamId}/games/${game.id}`" class="text-green-accent-3">
+                <NuxtLink :to="`/teams/${props.teamId}/games/${game.id}`" class="text-green-accent-3">
                   {{ game.name }}
                 </NuxtLink>
               </td>
@@ -43,6 +45,12 @@
       </v-empty-state>
     </template>
   </TabWindowItem>
+
+  <!-- <GameDeleteDialog
+    :is-show="showsGameDeleteDialog"
+    @delete="deleteGame"
+    @update-dialog="showsGameDeleteDialog = false"
+  /> -->
 </template>
 
 <script setup lang="ts">
@@ -54,46 +62,19 @@ type Props = {
   games: Game[];
 };
 const props = defineProps<Props>();
+const emit = defineEmits(['create-new-game', 'update-game', 'delete-game']);
+const user = useUser();
+const { $supabase } = useNuxtApp();
 
-// import { sampleTeam, sampleOpponentTeam } from '~/assets/gemes';
-// const games = ref<Game[]>([
-//   {
-//     uuid: "uuid1",
-//     date: Date.now(),
-//     formation: '3-4-3',
-//     startingMembers: {
-//       forwards: [sampleTeam[0], sampleTeam[1], sampleTeam[2]],
-//       midfielders: [sampleTeam[3], sampleTeam[4], sampleTeam[5], sampleTeam[6]],
-//       defenders: [sampleTeam[7], sampleTeam[8], sampleTeam[9]],
-//       goalkeeper: sampleTeam[10],
-//       reserves: [sampleTeam[11], sampleTeam[12], sampleTeam[13]],
-//     },
-//     opponent: "Sister Industries",
-//     matchTime: 92,
-//     matchResult: 'win',
-//     Scorers: [{ principal: sampleTeam[0], time: 20, isAlly: true }, { principal: sampleTeam[2], time: 43, isAlly: true }, { principal: sampleOpponentTeam[0], time: 65, isAlly: false }],
-//     Assists: [],
-//     warnings: [],
-//     substitutions: [],
-//   },
-//   {
-//     uuid: "uuid2",
-//     date: Date.now(),
-//     formation: '3-4-3',
-//     startingMembers: {
-//       forwards: [sampleTeam[0], sampleTeam[1], sampleTeam[2]],
-//       midfielders: [sampleTeam[3], sampleTeam[4], sampleTeam[5], sampleTeam[6]],
-//       defenders: [sampleTeam[7], sampleTeam[8], sampleTeam[9]],
-//       goalkeeper: sampleTeam[10],
-//       reserves: [sampleTeam[11], sampleTeam[12], sampleTeam[13]],
-//     },
-//     opponent: "mizuho team",
-//     matchTime: 44,
-//     matchResult: 'draw',
-//     Scorers: [],
-//     Assists: [],
-//     warnings: [],
-//     substitutions: [],
-//   }
-// ])
+/**
+ * Game Delete Dialog
+ */
+// const showsGameDeleteDialog = ref(false);
+// const showGameDeleteDialog = () => {
+//   showsGameDeleteDialog.value = true;
+// };
+// const deleteGame = () => {
+//   emit('delete-game');
+//   showsGameDeleteDialog.value = false;
+// };
 </script>

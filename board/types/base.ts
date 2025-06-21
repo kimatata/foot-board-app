@@ -38,6 +38,8 @@ export type Team = {
 
 export type Player = {
   id: number;
+  created_at: string;
+  team_id: number;
   name: string;
   birthdate: Date;
   gender: Gender;
@@ -51,13 +53,13 @@ export type PlayerTeam = {
   player_id: number;
 };
 
-export type MemberList = {
-  forwards: Player[];
-  midfielders: Player[];
-  defenders: Player[];
-  goalkeeper: Player;
-  reserves: Player[];
-};
+// export type MemberList = {
+//   forwards: Player[];
+//   midfielders: Player[];
+//   defenders: Player[];
+//   goalkeeper: Player;
+//   reserves: Player[];
+// };
 
 export type ScoreEvent = {
   principal: Player;
@@ -79,18 +81,28 @@ export type Substitution = {
   time: number;
 };
 
+export type GameStartingMembers = {
+  id: number;
+  created_at: string;
+  game_id: number;
+  team_id: number;
+  position: Position;
+};
+
 export type Game = {
   id: number;
+  created_at: string;
+  team_id: number;
   name: string;
-  date: number;
   memo: string;
+  date: number;
   formation: Formation;
-  starting_members: MemberList; // 専用の中間テーブル必要
   opponent: string;
   match_time: number;
   match_result: MatchResult;
-  scorers: ScoreEvent[]; // 専用の中間テーブル必要
-  assists: ScoreEvent[]; // 専用の中間テーブル必要
-  warnings: Warning[]; // 専用の中間テーブル必要
-  substitutions: Substitution[]; // 専用の中間テーブル必要
+  starting_members?: GameStartingMembers; // 別の中間テーブルに保存
+  scorers?: ScoreEvent[]; // 別の中間テーブルに保存
+  assists?: ScoreEvent[]; // 別の中間テーブルに保存
+  warnings?: Warning[]; // 別の中間テーブルに保存
+  substitutions?: Substitution[]; // 別の中間テーブルに保存
 };
