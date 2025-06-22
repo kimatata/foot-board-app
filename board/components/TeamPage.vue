@@ -28,7 +28,13 @@
             <v-tabs-window v-model="tab">
               <template v-if="team">
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="games">
-                  <TabWindowItemGames :team-id="team.id" :games="games" @create-new-game="createNewGame" />
+                  <TabWindowItemGames
+                    :team-id="team.id"
+                    :games="games"
+                    @create-new-game="createNewGame"
+                    @update-game="updateGame"
+                    @delete-game="deleteGame"
+                  />
                 </v-tabs-window-item>
 
                 <v-tabs-window-item :transition="false" :reverse-transition="false" value="members">
@@ -167,6 +173,51 @@ const createNewGame = async () => {
     games.value.push(data[0]);
   } else {
     console.error('failed to create game', error);
+  }
+};
+
+const updateGame = async (newGame: Game) => {
+  if (!user.value) {
+    return;
+  }
+
+  const { data, error } = await $supabase
+    .from('games')
+    .update({
+      name: newGame.name,
+      memo: newGame.memo,
+      opponent: newGame.opponent,
+      date: newGame.date,
+      formation: newGame.formation,
+      match_time: newGame.match_time,
+      match_result: newGame.match_result,
+      starting_members: newGame.starting_members,
+      scorers: newGame.scorers,
+      assists: newGame.assists,
+      warnings: newGame.warnings,
+      substitutions: newGame.substitutions,
+    })
+    .eq('id', newGame.id)
+    .select();
+
+  if (error) {
+    console.error('Failed to update game:', error);
+  } else {
+    const index = games.value.findIndex((game) => game.id === newGame.id);
+    games.value[index] = data[0];
+  }
+};
+
+const deleteGame = async (gameId: number) => {
+  if (!user.value) {
+    return;
+  }
+
+  const { error } = await $supabase.from('games').delete().eq('id', gameId);
+  if (error) {
+    console.error('Failed to delete game:', error);
+  } else {
+    games.value = games.value.filter((game) => game.id !== gameId);
   }
 };
 </script>
