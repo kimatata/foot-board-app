@@ -2,18 +2,11 @@
   <v-container>
     <div class="d-flex align-center my-6">
       <h2>Teams</h2>
-      <v-btn
-        size="small"
-        prepend-icon="mdi-plus"
-        color="green-accent-3"
-        class="ms-8"
-        @click="showTeamDialog"
-        :disabled="!user"
-      >
+      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3" class="ms-8" @click="showTeamDialog">
         New Team
       </v-btn>
     </div>
-    <div v-if="sortedTeams.length > 0">
+    <div v-show="sortedTeams.length > 0">
       <v-row>
         <v-col v-for="(team, index) in sortedTeams" :key="index" cols="12" md="4">
           <v-card :title="team.name" class="rounded elevation-3" :to="`teams/${team.id}`" link>
@@ -36,7 +29,7 @@
       </v-row>
     </div>
     <v-empty-state
-      v-else
+      v-show="sortedTeams.length === 0"
       icon="mdi-magnify"
       text="Try adjusting your search terms or filters. Sometimes less specific terms or broader queries can help you find what you're looking for."
       title="We couldn't find a match."
@@ -85,6 +78,7 @@ const fetchTeams = async () => {
  */
 const teamDialog = ref();
 const showsTeamDialog = ref(false);
+const showsPleaseSigninDialog = ref(false);
 const showTeamDialog = () => {
   teamDialog.value.init(null);
   showsTeamDialog.value = true;
