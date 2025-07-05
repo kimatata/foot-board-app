@@ -4,9 +4,7 @@
     <template #content>
       <div class="d-flex justify-space-between align-center">
         <h4 class="text-subtitle-1 text-medium-emphasis">Do you want to sign out of this site?</h4>
-        <v-btn color="green-accent-3" variant="outlined" @click="emit('sign-out')" style="width: 96px">
-          Sign Out
-        </v-btn>
+        <v-btn color="primary" variant="outlined" @click="emit('sign-out')" style="width: 96px"> Sign Out </v-btn>
       </div>
       <!-- <div class="d-flex justify-space-between align-center mt-3">
         <h4 class="text-subtitle-1 text-pink-accent-3">Delete all data from your account</h4>

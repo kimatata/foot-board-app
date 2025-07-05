@@ -1,7 +1,7 @@
 <template>
   <TabWindowItem :title="'Team'">
     <template #actions>
-      <v-btn size="small" prepend-icon="mdi-pencil" color="green-accent-3" class="me-2" @click="showTeamDialog">
+      <v-btn size="small" prepend-icon="mdi-pencil" color="primary" class="me-2" @click="showTeamDialog">
         Update Team
       </v-btn>
       <v-btn

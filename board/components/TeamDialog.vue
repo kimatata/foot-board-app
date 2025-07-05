@@ -24,7 +24,7 @@
           <v-btn
             variant="elevated"
             :text="props.mode === 'new' ? 'Create' : 'Update'"
-            color="green-accent-3"
+            color="primary"
             type="submit"
             class="w-25"
           />

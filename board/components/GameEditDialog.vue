@@ -165,7 +165,7 @@
           <v-spacer></v-spacer>
 
           <v-btn text="Cancel" @click="closeDialog" class="w-25" />
-          <v-btn variant="elevated" text="Update" color="green-accent-3" type="submit" class="w-25" />
+          <v-btn variant="elevated" text="Update" color="primary" type="submit" class="w-25" />
         </v-card-actions>
       </v-form>
     </v-card>

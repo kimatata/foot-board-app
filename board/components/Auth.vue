@@ -6,7 +6,7 @@
         append-icon="mdi-chevron-right"
         variant="text"
         size="small"
-        color="green-accent-3"
+        color="primary"
         :to="props.authMode === 'signup' ? '/account/signin' : '/account/signup'"
         nuxt
       >
@@ -36,7 +36,7 @@
         <div class="text-subtitle-1 text-medium-emphasis">Password</div>
         <NuxtLink
           v-if="props.authMode === 'signin'"
-          class="text-caption text-decoration-none text-green-accent-3"
+          class="text-caption text-decoration-none text-primary"
           :to="'/account/forgot-password'"
         >
           Forgot sign in password?
@@ -71,7 +71,7 @@
         />
       </div>
 
-      <v-btn class="mt-8" color="green-accent-3" size="large" block :loading="loading" type="submit">
+      <v-btn class="mt-8" color="primary" size="large" block :loading="loading" type="submit">
         {{ props.authMode === 'signup' ? 'Sign up' : 'Sign in' }}
       </v-btn>
     </v-form>
