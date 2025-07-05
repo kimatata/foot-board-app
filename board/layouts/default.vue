@@ -16,7 +16,7 @@
             prepend-icon="mdi-account-circle-outline"
             to="/account/signin"
             variant="tonal"
-            color="green-accent-3"
+            color="primary"
             class="me-2"
             nuxt
           >
@@ -33,7 +33,7 @@
           <span>Teams</span>
         </v-btn>
 
-        <v-btn to="/account/signin" variant="tonal" color="green-accent-3" nuxt>
+        <v-btn to="/account/signin" variant="tonal" color="primary" nuxt>
           <v-icon>mdi-account-circle-outline</v-icon>
           <span>{{ user ? 'Account' : 'Sign In' }}</span>
         </v-btn>

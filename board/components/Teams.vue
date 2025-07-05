@@ -2,7 +2,7 @@
   <v-container>
     <div class="d-flex align-center my-6">
       <h2>Teams</h2>
-      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3" class="ms-8" @click="showTeamDialog">
+      <v-btn size="small" prepend-icon="mdi-plus" color="primary" class="ms-8" @click="showTeamDialog">
         New Team
       </v-btn>
     </div>

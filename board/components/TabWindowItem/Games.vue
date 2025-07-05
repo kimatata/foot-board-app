@@ -1,9 +1,7 @@
 <template>
   <TabWindowItem :title="'Games'">
     <template #actions>
-      <v-btn size="small" prepend-icon="mdi-plus" color="green-accent-3" @click="emit('create-new-game')">
-        New Game
-      </v-btn>
+      <v-btn size="small" prepend-icon="mdi-plus" color="primary" @click="emit('create-new-game')"> New Game </v-btn>
     </template>
     <template #content>
       <div v-show="props.games.length > 0">

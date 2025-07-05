@@ -1,9 +1,7 @@
 <template>
   <TabWindowItem :title="'Account'">
     <template #actions>
-      <v-btn size="small" color="green-accent-3" prepend-icon="mdi-pencil" @click="showUserDialog">
-        Edit Profile
-      </v-btn>
+      <v-btn size="small" color="primary" prepend-icon="mdi-pencil" @click="showUserDialog"> Edit Profile </v-btn>
     </template>
     <template #content>
       <div v-if="props.user">
