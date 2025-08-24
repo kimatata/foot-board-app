@@ -7,11 +7,14 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const user = useState('user');
   const messages = useMessages();
-  if (!user.value) {
-    messages.value.push({
-      text: 'You need to sign in to access this page.',
-      color: 'error',
-    });
-    return navigateTo('/account/signin');
+
+  if (import.meta.client) {
+    if (!user.value) {
+      messages.value.push({
+        text: 'You need to sign in to access this page.',
+        color: 'error',
+      });
+      return navigateTo('/account/signin');
+    }
   }
 });

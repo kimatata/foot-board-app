@@ -38,8 +38,6 @@ const messages = useMessages();
 
 const tab = ref('account');
 const loading = ref(false);
-const username = ref('');
-const avatar_path = ref('');
 const user = useUser();
 
 onMounted(async () => {

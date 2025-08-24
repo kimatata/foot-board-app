@@ -149,7 +149,9 @@ const signIn = async () => {
   if (error) {
     message.value = 'Sign in failed';
   } else {
-    navigateTo('/account');
+    // when signing in, need to refresh user.value
+    // so full load page not using navigateTo()
+    window.location.href = '/account';
   }
 };
 </script>
