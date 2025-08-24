@@ -14,8 +14,13 @@ export default defineNuxtPlugin((app) => {
           colors: {
             primary: colors.green.accent3,
             secondary: colors.amber.accent1,
-            // primary: // '#16C47F',
-            // secondary: // '#FFD65A',
+          },
+        },
+        dark: {
+          dark: true,
+          colors: {
+            primary: colors.green.accent3,
+            secondary: colors.amber.accent1,
           },
         },
       },
