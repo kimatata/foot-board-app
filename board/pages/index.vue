@@ -9,7 +9,9 @@
           FootBoard helps you easily manage and visualize your football team's matches, members, and match metrics.<br />
           Keep a record of your team's history, analyze performance, and share results with ease.
         </p>
-        <v-btn color="primary" large :to="user ? '/account' : '/account/signin'" class="mb-10">Get Started</v-btn>
+        <ClientOnly>
+          <v-btn color="primary" large :to="user ? '/account' : '/account/signin'" class="mb-10">Get Started</v-btn>
+        </ClientOnly>
       </v-col>
     </v-row>
     <v-row class="mt-8 justify-center">

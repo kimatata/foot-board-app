@@ -37,36 +37,17 @@ const { $supabase } = useNuxtApp();
 const messages = useMessages();
 
 const tab = ref('account');
-const user = ref<User | null>(null);
 const loading = ref(false);
 const username = ref('');
 const avatar_path = ref('');
+const user = useUser();
 
 onMounted(async () => {
-  getUser();
-  if (user.value) {
-    fetchUser(user.value.id);
-  }
-});
-
-const getUser = async () => {
-  const { data, error } = await $supabase.auth.getSession();
-  if (error || !data.session) {
-    await navigateTo('account/signin');
+  if (!user.value) {
+    console.error('user is not signed in');
     return;
   }
-
-  user.value = data.session.user;
-};
-
-const fetchUser = async (userId: string) => {
-  const { data } = await $supabase.from('profiles').select(`username, avatar_url`).eq('id', userId).single();
-
-  if (data) {
-    username.value = data.username;
-    avatar_path.value = data.avatar_url;
-  }
-};
+});
 
 const onUpdateUser = (newUser: User) => {
   user.value = newUser;

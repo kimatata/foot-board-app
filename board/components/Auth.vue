@@ -87,7 +87,6 @@ type Props = {
   authMode: AuthMode;
 };
 const props = defineProps<Props>();
-
 const form = ref();
 const loading = ref(false);
 const email = ref('');
@@ -97,6 +96,18 @@ const passwordConfirm = ref('');
 const message = ref<string>('');
 const emailRules = [(v: string) => !!v || 'Email is required'];
 const passwordRules = [(v: string) => (v && v.length >= 6) || 'Password must be 6 characters or more'];
+const user = useUser();
+
+onMounted(async () => {
+  checkUser();
+});
+
+const checkUser = async () => {
+  if (user.value) {
+    await navigateTo('/account');
+    return;
+  }
+};
 
 const submit = async () => {
   const { valid } = await form.value.validate();

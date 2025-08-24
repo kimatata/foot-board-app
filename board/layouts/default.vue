@@ -20,11 +20,11 @@
             class="me-2"
             nuxt
           >
-            {{ user ? 'Account' : 'Sign In' }}
+            {{ buttonString }}
           </v-btn>
         </div>
         <!-- TODO : Add theme toggle button -->
-        <!-- <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" /> -->
+        <v-btn :icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" slim @click="onClick" />
       </v-app-bar>
 
       <v-bottom-navigation class="d-flex d-md-none">
@@ -35,7 +35,7 @@
 
         <v-btn to="/account/signin" variant="tonal" color="primary" nuxt>
           <v-icon>mdi-account-circle-outline</v-icon>
-          <span>{{ user ? 'Account' : 'Sign In' }}</span>
+          <span>{{ buttonString }}</span>
         </v-btn>
       </v-bottom-navigation>
 
@@ -52,22 +52,13 @@
 const user = useUser();
 const theme = useTheme();
 const messages = useMessages();
-const { $supabase } = useNuxtApp();
 
-// const onClick = () => {
-//   theme.value = theme.value === 'light' ? 'dark' : 'light';
-// };
-
-onBeforeMount(async () => {
-  getUser();
-});
-
-const getUser = async () => {
-  const { data, error } = await $supabase.auth.getSession();
-  if (error || !data.session) {
-    return;
-  }
-
-  user.value = data.session.user;
+const onClick = () => {
+  theme.value = theme.value === 'light' ? 'dark' : 'light';
 };
+
+const buttonString = ref('Loading...');
+onMounted(() => {
+  buttonString.value = user.value ? 'Account' : 'Sign In';
+});
 </script>
